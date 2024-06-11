@@ -5,7 +5,6 @@ on:
   push:
     branches: [ main ]
 
-
 env:
   ALIYUN_REGISTRY: "${{ secrets.ALIYUN_REGISTRY }}"
   ALIYUN_NAME_SPACE: "${{ secrets.ALIYUN_NAME_SPACE }}"
@@ -13,7 +12,6 @@ env:
   ALIYUN_REGISTRY_PASSWORD: "${{ secrets.ALIYUN_REGISTRY_PASSWORD }}"
 
 jobs:
-
   build:
     name: Pull
     runs-on: ubuntu-latest
@@ -27,73 +25,92 @@ jobs:
     - name: Build and push image Aliyun
       run: |
         docker login -u $ALIYUN_REGISTRY_USER -p $ALIYUN_REGISTRY_PASSWORD $ALIYUN_REGISTRY
+        
         # 数据预处理,判断镜像是否重名
         declare -A duplicate_images
         declare -A temp_map
+        
         while IFS= read -r line; do
             [[ -z "$line" ]] && continue
-            # 获取镜像的完整名称，例如kasmweb/nginx:1.25.3（命名空间/镜像名:版本号）
+            
+            # 获取镜像的完整名称，例如 kasmweb/nginx:1.25.3
             image=$(echo "$line" | awk '{print $NF}')
             echo "image $image"
-            # 获取镜像名:版本号  例如nginx:1.25.3
+            
+            # 获取镜像名:版本号  例如 nginx:1.25.3
             image_name_tag=$(echo "$image" | awk -F'/' '{print $NF}')
             echo "image_name_tag $image_name_tag"
-            # 获取命名空间
-            name_space=$(echo "$image" | awk -F'/' '{if (NF>1) print $1}'| awk '{print $1}')
+            
+            # 获取命名空间 例如 kasmweb
+            name_space=$(echo "$image" | awk -F'/' '{if (NF>1) print $1}' | awk '{print $1}')
             echo "name_space: $name_space"
+            
             # 这里不要是空值影响判断
             name_space="${name_space}_"
-            # 获取镜像名例如nginx
+            
+            # 获取镜像名例如 nginx
             image_name=$(echo "$image_name_tag" | awk -F':' '{print $1}')
             
-            # 如果镜像存在于数组中，则添加temp_map
+            # 如果镜像存在于数组中，则添加到 temp_map
             if [[ -n "${temp_map[$image_name]}" ]]; then
-                 # 如果temp_map已经存在镜像名，判断是不是同一命名空间
-                 if [[ "${temp_map[$image_name]}" != $name_space  ]]; then
+                # 如果 temp_map 已经存在镜像名，判断是不是同一命名空间
+                if [[ "${temp_map[$image_name]}" != $name_space ]]; then
                     echo "duplicate image name: $image_name"
                     duplicate_images[$image_name]="true"
-                 fi
+                fi
             else
-                # 存镜像的命名空间
+                # 存储镜像的命名空间
                 temp_map[$image_name]=$name_space
-            fi       
+            fi
         done < images.txt
-        
         
         while IFS= read -r line; do
             [[ -z "$line" ]] && continue
+            
             echo "docker pull $line"
             docker pull $line
+            
             platform=$(echo "$line" | awk -F'--platform[ =]' '{if (NF>1) print $2}' | awk '{print $1}')
             echo "platform is $platform"
-            # 如果存在架构信息 将架构信息拼到镜像名称前面
+            
+            # 如果存在架构信息，将架构信息拼到镜像名称前面
             if [ -z "$platform" ]; then
                 platform_prefix=""
             else
                 platform_prefix="${platform//\//_}_"
             fi
             echo "platform_prefix is $platform_prefix"
-            # 获取镜像的完整名称，例如kasmweb/nginx:1.25.3（命名空间/镜像名:版本号）
+            
+            # 获取镜像的完整名称，例如 kasmweb/nginx:1.25.3
             image=$(echo "$line" | awk '{print $NF}')
-            # 获取 镜像名:版本号  例如nginx:1.25.3
+            
+            # 获取镜像名:版本号 例如 nginx:1.25.3
             image_name_tag=$(echo "$image" | awk -F'/' '{print $NF}')
-            # 获取命名空间  例如kasmweb
-            name_space=$(echo "$image" | awk -F'/' '{if (NF>1) print $1}'| awk '{print $1}')
-            # 获取镜像名例  例如nginx
+            
+            # 获取命名空间 例如 kasmweb
+            name_space=$(echo "$image" | awk -F'/' '{if (NF>1) print $1}' | awk '{print $1}')
+            
+            # 获取镜像名 例如 nginx
             image_name=$(echo "$image_name_tag" | awk -F':' '{print $1}')
         
             name_space_prefix=""
             # 如果镜像名重名
             if [[ -n "${duplicate_images[$image_name]}" ]]; then
-               #如果命名空间非空，将命名空间加到前缀
+               # 如果命名空间非空，将命名空间加到前缀
                if [[ -n "${name_space}" ]]; then
                   name_space_prefix="${name_space}_"
                fi
             fi
             
             new_image="$ALIYUN_REGISTRY/$ALIYUN_NAME_SPACE/$platform_prefix$name_space_prefix$image_name_tag"
-            echo "docker tag $image $new_image"
-            docker tag $image $new_image
-            echo "docker push $new_image"
-            docker push $new_image
+            
+            # 检查镜像是否已经存在于目标仓库中
+            if docker manifest inspect $new_image > /dev/null 2>&1; then
+                echo "Image $new_image already exists in registry, skipping push."
+            else
+                echo "docker tag $image $new_image"
+                docker tag $image $new_image
+                echo "docker push $new_image"
+                docker push $new_image
+            fi
         done < images.txt
