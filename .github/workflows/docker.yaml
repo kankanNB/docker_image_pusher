@@ -48,10 +48,10 @@ jobs:
             fi
 
             # 检查是否有重复镜像
-            name_space_prefix=""
             if [[ -n "${temp_map[$image_name]}" && "${temp_map[$image_name]}" != $name_space ]]; then
                 name_space_prefix="${name_space}_"
             else
+                name_space_prefix=""
                 temp_map[$image_name]=$name_space
             fi
 
