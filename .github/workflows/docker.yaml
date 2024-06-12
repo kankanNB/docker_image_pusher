@@ -32,6 +32,8 @@ jobs:
 
     - name: Build and push image to Aliyun
       run: |
+        # 创建并初始化 pushed_images.txt 文件
+        echo "" > pushed_images.txt
 
         # 处理镜像并上传
         while IFS= read -r line; do
