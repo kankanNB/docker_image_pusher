@@ -3,7 +3,9 @@ name: Docker
 on:
   workflow_dispatch:
   push:
-    branches: [ main ]
+    branches: 
+      - main
+      - '!pushed-images-branch' # 排除 pushed-images-branch 分支
 
 env:
   ALIYUN_REGISTRY: "${{ secrets.ALIYUN_REGISTRY }}"
@@ -33,10 +35,11 @@ jobs:
     - name: Build and push image to Aliyun
       run: |
         # 创建并初始化 pushed_images.txt 文件
-        echo "" > pushed_images.txt
+        echo "Initializing pushed_images.txt" > pushed_images.txt
 
         # 处理镜像并上传
         while IFS= read -r line; do
+            echo "Processing line: $line"
             [[ -z "$line" ]] && continue
             image=$(echo "$line" | awk '{print $NF}')
             image_name_tag=$(echo "$image" | awk -F'/' '{print $NF}')
@@ -61,12 +64,22 @@ jobs:
                 docker push $new_image
 
                 # 记录成功推送的镜像链接
+                echo "Pushing image: $new_image"
                 echo "$new_image" >> pushed_images.txt
             fi
         done < images.txt
 
-    - name: Upload pushed images log
-      uses: actions/upload-artifact@v3
-      with:
-        name: pushed-images-log
-        path: pushed_images.txt
+        # 输出 pushed_images.txt 的内容用于调试
+        echo "Contents of pushed_images.txt:"
+        cat pushed_images.txt
+
+    - name: Commit and push changes
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git checkout -b pushed-images-branch
+        git add pushed_images.txt
+        git commit -m 'Update pushed_images.txt with new pushed images'
+        git push -u origin pushed-images-branch
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
