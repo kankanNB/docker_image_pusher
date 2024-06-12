@@ -12,9 +12,8 @@ env:
   ALIYUN_REGISTRY_PASSWORD: "${{ secrets.ALIYUN_REGISTRY_PASSWORD }}"
 
 jobs:
-
   build:
-    name: Pull
+    name: Pull and Push Docker Images
     runs-on: ubuntu-latest
     steps:
     - name: Docker Setup Buildx
@@ -23,59 +22,56 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
 
-    - name: Build and push image Aliyun
+    - name: Build and push image to Aliyun
       run: |
+        set -e  # 遇到错误立即退出
+        set -x  # 打印执行的命令及其参数
+
         docker login -u $ALIYUN_REGISTRY_USER -p $ALIYUN_REGISTRY_PASSWORD $ALIYUN_REGISTRY
 
-        # 数据预处理,判断镜像是否重名
-        declare -A duplicate_images
+        # 初始化临时映射，用于检测重复镜像
         declare -A temp_map
+
+        # 逐行处理 images.txt
         while IFS= read -r line; do
             [[ -z "$line" ]] && continue
             image=$(echo "$line" | awk '{print $NF}')
             image_name_tag=$(echo "$image" | awk -F'/' '{print $NF}')
-            name_space=$(echo "$image" | awk -F'/' '{if (NF>1) print $1}'| awk '{print $1}')
+            name_space=$(echo "$image" | awk -F'/' '{if (NF>1) print $1}' | awk '{print $1}')
             name_space="${name_space}_"
-            image_name=$(echo "$image_name_tag" | awk -F':' '{print $1}')
-            
-            if [[ -n "${temp_map[$image_name]}" ]]; then
-                 if [[ "${temp_map[$image_name]}" != $name_space  ]]; then
-                    duplicate_images[$image_name]="true"
-                 fi
-            else
-                temp_map[$image_name]=$name_space
-            fi       
-        done < images.txt
-        
-        # 处理镜像并上传
-        while IFS= read -r line; do
-            [[ -z "$line" ]] && continue
-            image=$(echo "$line" | awk '{print $NF}')
-            image_name_tag=$(echo "$image" | awk -F'/' '{print $NF}')
-            name_space=$(echo "$image" | awk -F'/' '{if (NF>1) print $1}'| awk '{print $1}')
             image_name=$(echo "$image_name_tag" | awk -F':' '{print $1}')
             platform=$(echo "$line" | awk -F'--platform[ =]' '{if (NF>1) print $2}' | awk '{print $1}')
             platform_prefix=""
-            if [ -n "$platform" ]; then
+
+            if [[ -n "$platform" ]]; then
                 platform_prefix="${platform//\//_}_"
             fi
 
+            # 检查是否有重复镜像
             name_space_prefix=""
-            if [[ -n "${duplicate_images[$image_name]}" ]]; then
-               if [[ -n "${name_space}" ]]; then
-                  name_space_prefix="${name_space}_"
-               fi
-            fi
-            
-            new_image="$ALIYUN_REGISTRY/$ALIYUN_NAME_SPACE/$platform_prefix$name_space_prefix$image_name_tag"
-            if docker manifest inspect $new_image >/dev/null 2>&1; then
-                echo "Image $new_image already exists in registry, skipping pull and push."
+            if [[ -n "${temp_map[$image_name]}" && "${temp_map[$image_name]}" != $name_space ]]; then
+                name_space_prefix="${name_space}_"
             else
-                echo "docker pull $line"
+                temp_map[$image_name]=$name_space
+            fi
+
+            new_image="$ALIYUN_REGISTRY/$ALIYUN_NAME_SPACE/$platform_prefix$name_space_prefix$image_name_tag"
+
+            if docker manifest inspect $new_image >/dev/null 2>&1; then
+                echo "镜像 $new_image 已存在于仓库中，跳过拉取和推送。"
+            else
+                echo "正在拉取 $line"
                 docker pull $line
-                echo "docker tag $image $new_image"
+                echo "正在将 $image 标记为 $new_image"
                 docker tag $image $new_image
-                echo "docker push $new_image"
+                echo "正在推送 $new_image"
                 docker push $new_image
+                echo "$new_image" >> pushed_images.txt
             fi
         done < images.txt
+
+    - name: Upload pushed_images.txt
+      uses: actions/upload-artifact@v2
+      with:
+        name: pushed-images
+        path: pushed_images.txt
