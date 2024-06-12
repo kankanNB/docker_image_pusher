@@ -27,6 +27,9 @@ jobs:
       run: |
         docker login -u $ALIYUN_REGISTRY_USER -p $ALIYUN_REGISTRY_PASSWORD $ALIYUN_REGISTRY
 
+        # 初始化pushed_images.txt文件
+        echo "" > pushed_images.txt
+
         # 处理镜像并上传
         while IFS= read -r line; do
             [[ -z "$line" ]] && continue
@@ -45,10 +48,20 @@ jobs:
             if docker manifest inspect $new_image >/dev/null 2>&1; then
                 echo "Image $new_image already exists in registry, skipping pull and push."
             else
-                echo "Skipping pull since image $new_image already exists in registry."
+                echo "docker pull $line"
+                docker pull $line
                 echo "docker tag $image $new_image"
                 docker tag $image $new_image
                 echo "docker push $new_image"
                 docker push $new_image
+
+                # 记录成功推送的镜像链接
+                echo "$new_image" >> pushed_images.txt
             fi
         done < images.txt
+
+    - name: Upload pushed images log
+      uses: actions/upload-artifact@v3
+      with:
+        name: pushed-images-log
+        path: pushed_images.txt
