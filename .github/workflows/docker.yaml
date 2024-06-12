@@ -78,6 +78,7 @@ jobs:
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
         git checkout -b pushed-images-branch
+        git pull origin pushed-images-branch # 获取远程分支更新
         git add pushed_images.txt
         git commit -m 'Update pushed_images.txt with new pushed images'
         git push -u origin pushed-images-branch
