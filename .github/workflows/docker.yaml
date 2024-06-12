@@ -12,8 +12,9 @@ env:
   ALIYUN_REGISTRY_PASSWORD: "${{ secrets.ALIYUN_REGISTRY_PASSWORD }}"
 
 jobs:
+
   build:
-    name: Pull and Push Docker Images
+    name: Pull and Push
     runs-on: ubuntu-latest
     steps:
     - name: Docker Setup Buildx
@@ -24,54 +25,31 @@ jobs:
 
     - name: Build and push image to Aliyun
       run: |
-        set -e  # 遇到错误立即退出
-        set -x  # 打印执行的命令及其参数
-
         docker login -u $ALIYUN_REGISTRY_USER -p $ALIYUN_REGISTRY_PASSWORD $ALIYUN_REGISTRY
 
-        # 初始化临时映射，用于检测重复镜像
-        declare -A temp_map
-
-        # 逐行处理 images.txt
+        # 处理镜像并上传
         while IFS= read -r line; do
             [[ -z "$line" ]] && continue
             image=$(echo "$line" | awk '{print $NF}')
             image_name_tag=$(echo "$image" | awk -F'/' '{print $NF}')
             name_space=$(echo "$image" | awk -F'/' '{if (NF>1) print $1}' | awk '{print $1}')
-            name_space="${name_space}_"
             image_name=$(echo "$image_name_tag" | awk -F':' '{print $1}')
             platform=$(echo "$line" | awk -F'--platform[ =]' '{if (NF>1) print $2}' | awk '{print $1}')
             platform_prefix=""
-
-            if [[ -n "$platform" ]]; then
+            if [ -n "$platform" ]; then
                 platform_prefix="${platform//\//_}_"
             fi
 
-            # 检查是否有重复镜像
-            if [[ -n "${temp_map[$image_name]}" && "${temp_map[$image_name]}" != $name_space ]]; then
-                name_space_prefix="${name_space}_"
-            else
-                name_space_prefix=""
-                temp_map[$image_name]=$name_space
-            fi
-
-            new_image="$ALIYUN_REGISTRY/$ALIYUN_NAME_SPACE/$platform_prefix$name_space_prefix$image_name_tag"
-
+            new_image="$ALIYUN_REGISTRY/$ALIYUN_NAME_SPACE/$platform_prefix$image_name_tag"
+            
             if docker manifest inspect $new_image >/dev/null 2>&1; then
-                echo "镜像 $new_image 已存在于仓库中，跳过拉取和推送。"
+                echo "Image $new_image already exists in registry, skipping pull and push."
             else
-                echo "正在拉取 $line"
+                echo "docker pull $line"
                 docker pull $line
-                echo "正在将 $image 标记为 $new_image"
+                echo "docker tag $image $new_image"
                 docker tag $image $new_image
-                echo "正在推送 $new_image"
+                echo "docker push $new_image"
                 docker push $new_image
-                echo "$new_image" >> pushed_images.txt
             fi
         done < images.txt
-
-    - name: Upload pushed_images.txt
-      uses: actions/upload-artifact@v2
-      with:
-        name: pushed-images
-        path: pushed_images.txt
