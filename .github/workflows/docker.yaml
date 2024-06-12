@@ -3,9 +3,7 @@ name: Docker
 on:
   workflow_dispatch:
   push:
-    branches: 
-      - main
-      - '!pushed-images-branch' # 排除 pushed-images-branch 分支
+    branches: [ main ]
 
 env:
   ALIYUN_REGISTRY: "${{ secrets.ALIYUN_REGISTRY }}"
@@ -73,14 +71,8 @@ jobs:
         echo "Contents of pushed_images.txt:"
         cat pushed_images.txt
 
-    - name: Commit and push changes
-      run: |
-        git config --global user.name 'github-actions[bot]'
-        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-        git checkout -b pushed-images-branch
-        git pull --ff-only origin pushed-images-branch # 获取远程分支更新并快速前进
-        git add pushed_images.txt
-        git commit -m 'Update pushed_images.txt with new pushed images'
-        git push -u origin pushed-images-branch
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Upload pushed images log
+      uses: actions/upload-artifact@v3
+      with:
+        name: pushed-images-log
+        path: pushed_images.txt
