@@ -45,8 +45,7 @@ jobs:
             if docker manifest inspect $new_image >/dev/null 2>&1; then
                 echo "Image $new_image already exists in registry, skipping pull and push."
             else
-                echo "docker pull $line"
-                docker pull $line
+                echo "Skipping pull since image $new_image already exists in registry."
                 echo "docker tag $image $new_image"
                 docker tag $image $new_image
                 echo "docker push $new_image"
