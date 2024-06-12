@@ -23,12 +23,15 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
 
+    - name: Log in to Aliyun Docker registry
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.ALIYUN_REGISTRY_USER }}
+        password: ${{ secrets.ALIYUN_REGISTRY_PASSWORD }}
+        registry: ${{ secrets.ALIYUN_REGISTRY }}
+
     - name: Build and push image to Aliyun
       run: |
-        docker login -u $ALIYUN_REGISTRY_USER -p $ALIYUN_REGISTRY_PASSWORD $ALIYUN_REGISTRY
-
-        # 初始化pushed_images.txt文件
-        echo "" > pushed_images.txt
 
         # 处理镜像并上传
         while IFS= read -r line; do
