@@ -13,3 +13,4 @@ mysql:8.4.0-oraclelinux9
 traefik:v3.0.2
 grafana/grafana:11.0.0
 grafana/loki:main-b4d44f8
+nginx/nginx-prometheus-exporter:1.1.2
