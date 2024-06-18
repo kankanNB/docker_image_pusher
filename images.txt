@@ -15,3 +15,4 @@ grafana/grafana:11.0.0
 grafana/loki:main-b4d44f8
 nginx/nginx-prometheus-exporter:1.1.2
 bitnami/redis-exporter:1.61.0-debian-12-r0
+mysql:5.7.44-oraclelinux7
