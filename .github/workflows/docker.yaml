@@ -86,7 +86,7 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: pushed-images-log
-        path: pushed_images.txt
+        path: .
 
     - name: 打印镜像地址
       run: |
