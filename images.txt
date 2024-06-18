@@ -1,18 +1,1 @@
-nginx
-nginx:1.26.1-alpine-otel
-kasmweb/nginx:1.25.3
-xhofe/alist:latest
---platform=linux/arm64 xiaoyaliu/alist
-bitnami/alertmanager:0.27.0-debian-12-r11
-bitnami/alertmanager:0.27.0
-google/cadvisor:v0.33.0
-gcr.io/cadvisor/cadvisor-amd64:v0.49.1
-nginx:stable-alpine3.17
-redis:7.4-rc1-alpine3.20
-mysql:8.4.0-oraclelinux9
-traefik:v3.0.2
-grafana/grafana:11.0.0
-grafana/loki:main-b4d44f8
-nginx/nginx-prometheus-exporter:1.1.2
-bitnami/redis-exporter:1.61.0-debian-12-r0
-mysql:5.7.44-oraclelinux7
+ncabatoff/process-exporter:0.8.1
