@@ -1,1 +1,1 @@
-ncabatoff/process-exporter:0.8.1
+consul:1.15.4
