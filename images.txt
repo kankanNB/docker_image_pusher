@@ -1,1 +1,2 @@
-consul:1.15.4
+istio/pilot:1.22.1
+istio/proxyv2:1.22.1
