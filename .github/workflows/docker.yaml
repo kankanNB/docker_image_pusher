@@ -32,10 +32,8 @@ jobs:
 
     - name: Build and push image to Aliyun
       run: |
-        # 创建并初始化 pushed_images.txt 文件
         echo "Initializing pushed_images.txt" > pushed_images.txt
 
-        # 处理镜像并上传
         while IFS= read -r line; do
             echo "Processing line: $line"
             [[ -z "$line" ]] && continue
@@ -61,13 +59,11 @@ jobs:
                 echo "docker push $new_image"
                 docker push $new_image
 
-                # 记录成功推送的镜像链接
                 echo "Pushing image: $new_image"
                 echo "$new_image" >> pushed_images.txt
             fi
         done < images.txt
 
-        # 输出 pushed_images.txt 的内容用于调试
         echo "Contents of pushed_images.txt:"
         cat pushed_images.txt
 
