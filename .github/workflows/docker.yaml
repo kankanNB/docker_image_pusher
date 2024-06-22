@@ -2,6 +2,10 @@ name: Docker
 
 on:
   workflow_dispatch:
+    inputs:
+      namespace:
+        description: 'Custom namespace for Docker images'
+        required: false
   push:
     branches: [ main ]
 
@@ -32,14 +36,17 @@ jobs:
 
     - name: Build and push image to Aliyun
       run: |
+        # 创建并初始化 pushed_images.txt 文件
         echo "Initializing pushed_images.txt" > pushed_images.txt
 
+        # 处理镜像并上传
         while IFS= read -r line; do
             echo "Processing line: $line"
             [[ -z "$line" ]] && continue
+
+            # 提取镜像名称和其他参数
             image=$(echo "$line" | awk '{print $NF}')
             image_name_tag=$(echo "$image" | awk -F'/' '{print $NF}')
-            name_space=$(echo "$image" | awk -F'/' '{if (NF>1) print $1}' | awk '{print $1}')
             image_name=$(echo "$image_name_tag" | awk -F':' '{print $1}')
             platform=$(echo "$line" | awk -F'--platform[ =]' '{if (NF>1) print $2}' | awk '{print $1}')
             platform_prefix=""
@@ -47,8 +54,13 @@ jobs:
                 platform_prefix="${platform//\//_}_"
             fi
 
-            new_image="$ALIYUN_REGISTRY/$ALIYUN_NAME_SPACE/$platform_prefix$image_name_tag"
+            # 提取命名空间参数，如果没有指定，则使用默认的 ALIYUN_NAME_SPACE
+            namespace_arg=$(echo "$line" | awk -v default_ns="$ALIYUN_NAME_SPACE" '{for (i=1; i<=NF; i++) {if ($i ~ /^--namespace=/) {print $i; exit}} print "--namespace=" default_ns}')
+
+            # 构建镜像地址
+            new_image="$ALIYUN_REGISTRY/$ALIYUN_NAME_SPACE/$platform_prefix$image_name_tag $namespace_arg"
             
+            # 检查镜像是否已经存在，如果不存在则拉取、打标签并推送
             if docker manifest inspect $new_image >/dev/null 2>&1; then
                 echo "Image $new_image already exists in registry, skipping pull and push."
             else
@@ -59,11 +71,13 @@ jobs:
                 echo "docker push $new_image"
                 docker push $new_image
 
+                # 记录成功推送的镜像链接
                 echo "Pushing image: $new_image"
                 echo "$new_image" >> pushed_images.txt
             fi
         done < images.txt
 
+        # 输出 pushed_images.txt 的内容用于调试
         echo "Contents of pushed_images.txt:"
         cat pushed_images.txt
 
