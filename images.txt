@@ -1,1 +1,1 @@
-prom/mysqld-exporter:v0.15.1
+grafana/promtail:main-b1adfce
