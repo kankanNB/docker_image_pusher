@@ -1,1 +1,2 @@
-grafana/promtail:main-b1adfce
+grafana/loki:3.0.0
+grafana/promtail:3.0.0 
