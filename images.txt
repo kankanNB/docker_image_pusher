@@ -1,2 +1,4 @@
-grafana/loki:3.0.0
-grafana/promtail:3.0.0 
+kibana:8.14.1
+elasticsearch:8.14.1
+logstash:8.14.1
+elastic/filebeat:8.14.1
