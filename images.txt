@@ -1,1 +1,1 @@
-filebrowser/filebrowser:v2.30.0-s6
+dreamacro/clash:v1.18.0
