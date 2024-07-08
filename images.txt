@@ -1,1 +1,1 @@
-dreamacro/clash:v1.18.0
+bitnami/blackbox-exporter:0.25.0
