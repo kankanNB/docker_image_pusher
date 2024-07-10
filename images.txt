@@ -1,1 +1,1 @@
-mysql:5.7.44
+php:8.4.0alpha1-fpm-alpine
