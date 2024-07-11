@@ -1,1 +1,1 @@
-php:8.4.0alpha1-fpm-alpine
+php:8.2.21-fpm-alpine
