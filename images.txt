@@ -1,1 +1,1 @@
-sheepkiller/kafka-manager:alpine
+alpinelinux/gitlab:17.0.4
