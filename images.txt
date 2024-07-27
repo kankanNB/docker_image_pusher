@@ -1,1 +1,2 @@
-nginx/nginx-ingress:3.6.1
+metallb/speaker:v0.9.3
+metallb/controller:v0.9.3
