@@ -1,7 +1,2 @@
-postgres:16.3-alpine
-postgres:16.3
-busybox:1.36.1-glibc
-busybox:1.36.1-musl
-sonarqube:10.1.0-community
-jenkins/jenkins:2.452.3-lts
-jenkins/jenkins:alpine3.20-jdk21
+emeraldsquad/sonar-scanner:4.1.0
+emeraldsquad/sonar-scanner:2.3.0
