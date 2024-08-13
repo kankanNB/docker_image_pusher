@@ -1,3 +1,2 @@
-docker.io/calico/cni:v3.28.1
-docker.io/calico/kube-controllers:v3.28.1
-docker.io/calico/node:v3.28.1
+quay.io/metallb/controller:v0.14.8
+quay.io/metallb/speaker:v0.14.8
