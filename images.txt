@@ -1,5 +1,4 @@
 jumpserver/core-ce:v3.10.7
-jumpserver/celery:v3.10.7
 jumpserver/kael:v3.10.7
 jumpserver/koko:v3.10.7
 jumpserver/magnus:v3.10.7
