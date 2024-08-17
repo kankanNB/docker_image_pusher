@@ -1,5 +1,3 @@
-jumpserver/core-ce:v3.10.7
-jumpserver/kael:v3.10.7
-jumpserver/koko:v3.10.7
-jumpserver/magnus:v3.10.7
-jumpserver/web:v3.10.7
+ghcr.io/dexidp/dex:v2.38.0
+quay.io/argoproj/argocd:v2.12.1
+redis:7.0.15-alpine
