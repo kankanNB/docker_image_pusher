@@ -1,3 +1,1 @@
-ghcr.io/dexidp/dex:v2.38.0
-quay.io/argoproj/argocd:v2.12.1
-redis:7.0.15-alpine
+node:22.6.0-alpine3.20
