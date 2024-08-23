@@ -1,1 +1,1 @@
-bitnami/mysql:8.0.36-debian-12-r8
+gitlab/gitlab-ce:14.1.0-ce.0
