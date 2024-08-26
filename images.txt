@@ -1,1 +1,1 @@
-gitlab/gitlab-ce:14.1.0-ce.0
+elasticsearch:7.8.1
