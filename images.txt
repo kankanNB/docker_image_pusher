@@ -1,1 +1,1 @@
-gitlab.kan.com/gitlab-org/gitlab-runner:alpine-v17.0.2
+registry.gitlab.com/gitlab-org/gitlab-runner:alpine-v17.0.2
