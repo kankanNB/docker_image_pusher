@@ -1,1 +1,1 @@
-quay.io/k8tz/k8tz:0.16.2 
+gitlab/gitlab-ce:17.3.1-ce.0
