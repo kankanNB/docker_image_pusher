@@ -1,1 +1,1 @@
-k8s.dockerproxy.com/prometheus-adapter/prometheus-adapter:v0.9.0
+quay.io/k8tz/k8tz:0.16.2 
