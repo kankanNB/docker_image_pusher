@@ -1,1 +1,3 @@
-docker:27-dind
+daprio/injector:1.11.1
+grafana/grafana:8.1.1
+prometheus-adapter/prometheus-adapter:v0.9.0
