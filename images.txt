@@ -1,1 +1,1 @@
-gitlab-org/gitlab-runner:0.65.2
+registry.gitlab.com/gitlab-org/gitlab-runner:0.65.2
