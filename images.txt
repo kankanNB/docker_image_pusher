@@ -1,1 +1,1 @@
-ngosang/amule:2.3.3-18
+docker:27.2.0-cli
