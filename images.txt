@@ -1,3 +1,1 @@
-apache/apisix-dashboard:3.0.0-alpine
-apache/apisix-ingress-controller:1.8.0
-apache/apisix:3.5.0-debian
+apache/apisix:3.10.0-debian
