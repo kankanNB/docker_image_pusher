@@ -1,1 +1,1 @@
-docker.io/grafana/grafana:11.2.1
+joplin/server:3.0.1-beta
