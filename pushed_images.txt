@@ -1,1 +1,2 @@
-
+hashicorp/consul-telemetry-collector:0.0.2
+hashicorp/consul:1.19.2
