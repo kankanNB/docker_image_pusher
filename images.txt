@@ -1,1 +1,1 @@
-clickhouse/clickhouse-server:23.8
+careywong/subweb:latest
