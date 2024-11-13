@@ -1,1 +1,1 @@
- openwrt/rootfs:x86-64-openwrt-23.05
+hubukoi/gtfobins:23.12.08
