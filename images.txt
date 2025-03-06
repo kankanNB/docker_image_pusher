@@ -1,1 +1,1 @@
-otel/opentelemetry-collector-k8s:0.114.0
+clickhouse/clickhouse-server:25.1
