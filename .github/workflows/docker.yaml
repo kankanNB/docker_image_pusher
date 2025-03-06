@@ -83,7 +83,7 @@ jobs:
     needs: build
     steps:
     - name: 下载镜像日志文件
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: pushed-images-log
         path: .
