@@ -72,7 +72,7 @@ jobs:
         cat pushed_images.txt
 
     - name: Upload pushed images log
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: pushed-images-log
         path: pushed_images.txt
