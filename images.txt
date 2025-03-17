@@ -1,1 +1,1 @@
-clickhouse/clickhouse-server:25.1
+otel/opentelemetry-collector-contrib:0.121.0
