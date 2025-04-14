@@ -1,1 +1,2 @@
-elasticsearch:8.17.3
+cubejs/cube:latest
+cubejs/cubestore:latest
