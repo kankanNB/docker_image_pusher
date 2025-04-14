@@ -1,2 +1,1 @@
-cubejs/cube:latest
-cubejs/cubestore:latest
+python:3.10-slim
