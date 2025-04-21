@@ -1,1 +1,1 @@
-soulter/astrbot:latest
+neosmemo/memos:0.22'
