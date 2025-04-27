@@ -1,1 +1,1 @@
-neosmemo/memos:0.22
+gitlab/gitlab-runner-helper:x86_64-0dc6e706
