@@ -1,1 +1,1 @@
-registry.k8s.io/kube-state-metrics/kube-state-metrics:v2.13.0
+registry.gitlab.com/gitlab-org/gitlab-runner/gitlab-runner-helper:x86_64-0dc6e706
