@@ -1,1 +1,1 @@
-gcr.io/kaniko-project/executor:v1.24.0
+quay.io/containers/buildah:v1.40.1
