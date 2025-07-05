@@ -1,3 +1,2 @@
-gitlab/gitlab-ce:17.8.7-ce.0
-gitlab/gitlab-ce:17.11.3-ce.0
-gitlab/gitlab-ce:18.0.1-ce.0
+gcr.io/kaniko-project/executor:v1.24.0
+gcr.io/kaniko-project/executor:v1.24
