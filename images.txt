@@ -1,1 +1,1 @@
-quay.io/containers/buildah:v1.40.1
+rustdesk/rustdesk-server:1.1.14
