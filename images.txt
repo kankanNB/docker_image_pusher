@@ -1,2 +1,1 @@
-registry.gitlab.com/gitlab-org/gitlab-runner:alpine-v18.1.1
-registry.gitlab.com/gitlab-org/gitlab-runner:alpine-v18.1.2
+keking/kkfileview:4.1.0
