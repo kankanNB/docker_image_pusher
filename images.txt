@@ -1,1 +1,1 @@
-docker.io/envoyproxy/envoy:distroless-v1.35.0
+golang:1.25.0-bookworm
