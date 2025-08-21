@@ -1,1 +1,1 @@
-rustfs/rustfs:1.0.0-alpha.45
+gitlab/gitlab-ee:18.3.0-ee.0
