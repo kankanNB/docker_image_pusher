@@ -1,1 +1,1 @@
-gitlab/gitlab-ee:18.2.4-ee.0
+docker.gitea.com/gitea:1.24.5-rootless
