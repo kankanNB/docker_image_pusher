@@ -1,1 +1,1 @@
-prom/alertmanager:v0.28.1
+mikefarah/yq:4.47.2
