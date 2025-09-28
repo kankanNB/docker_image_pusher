@@ -1,1 +1,1 @@
-gcr.io/cadvisor/cadvisor:v0.52.0
+prom/prometheus:v3.6.0
