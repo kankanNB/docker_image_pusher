@@ -1,1 +1,1 @@
-prom/prometheus:v3.6.0
+snipe/snipe-it:v6.3.4
