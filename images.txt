@@ -1,2 +1,1 @@
-otel/opentelemetry-collector-builder:0.138.0
-busybox:1.37.0
+otel/opentelemetry-collector-k8s:0.122.1
