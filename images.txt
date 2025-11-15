@@ -1,3 +1,7 @@
-minio/minio:RELEASE.2023-11-20T22-40-07Z
-docker.io/airbyte/db:2.0.1
-airbyte/bootloader:2.0.1
+irbyte/connector-builder-server:2.0.1
+airbyte/cron:2.0.1
+airbyte/server:2.0.1
+temporalio/auto-setup:1.27.2
+airbyte/worker:2.0.1
+airbyte/workload-api-server:2.0.1
+airbyte/workload-launcher:2.0.1
