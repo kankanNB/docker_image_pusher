@@ -1,4 +1,4 @@
-irbyte/connector-builder-server:2.0.1
+airbyte/connector-builder-server:2.0.1
 airbyte/cron:2.0.1
 airbyte/server:2.0.1
 temporalio/auto-setup:1.27.2
