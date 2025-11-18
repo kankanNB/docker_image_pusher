@@ -1,3 +1,2 @@
-airbyte/connector-sidecar:2.0.1
-airbyte/container-orchestrator:2.0.1
-airbyte/async-profiler:2.0.1
+airbyte/destination-clickhouse:2.1.14
+airbyte/source-mssql:4.2.6
