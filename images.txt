@@ -1,2 +1,3 @@
 airbyte/destination-clickhouse:2.1.14
 airbyte/source-mssql:4.2.6
+vimagick/tinyproxy:latest
