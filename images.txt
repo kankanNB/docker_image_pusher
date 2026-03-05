@@ -1,1 +1,2 @@
-node:14.19.3-slim
+airbyte/source-postgres:3.7.0
+airbyte/source-mysql:3.51.5
