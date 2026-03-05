@@ -1,2 +1,1 @@
-airbyte/source-postgres:3.7.0
-airbyte/source-mysql:3.51.5
+airbyte/source-postgres:3.7.2
