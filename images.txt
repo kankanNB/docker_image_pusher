@@ -1,1 +1,5 @@
-airbyte/source-postgres:3.7.2
+ghcr.io/dapr/dapr-operator:1.17.1
+ghcr.io/dapr/dapr-placement:1.17.1
+ghcr.io/dapr/dapr-scheduler:1.17.1
+ghcr.io/dapr/dapr-sentry:1.17.1
+ghcr.io/dapr/dapr-sidecar-injector:1.17.1
