@@ -1,2 +1,5 @@
-
-ghcr.io/dapr/daprd:1.17.1
+postgres:15.10
+featbit/featbit-data-analytics-server:5.3.5
+featbit/featbit-api-server:5.3.5
+featbit/featbit-evaluation-server:5.3.5
+featbit/featbit-ui:5.3.5
