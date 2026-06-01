@@ -1,5 +1,1 @@
-postgres:15.10
-featbit/featbit-data-analytics-server:5.3.5
-featbit/featbit-api-server:5.3.5
-featbit/featbit-evaluation-server:5.3.5
-featbit/featbit-ui:5.3.5
+postgres:16-alpine
