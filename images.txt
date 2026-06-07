@@ -1,1 +1,4 @@
-docker.io/calico/pod2daemon-flexvol:v3.19.4
+jumpserver/core-ce:v3.10.7
+jumpserver/kael-ce:v3.10.7
+jumpserver/koko-ce:v3.10.7
+jumpserver/magnus-ce:v3.10.7
