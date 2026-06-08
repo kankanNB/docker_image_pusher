@@ -1,2 +1,1 @@
-
-jumpserver/celery:v3.10.7
+metallb/controller:v0.13.3
