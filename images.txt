@@ -1,2 +1,1 @@
-jumpserver/chen:v3.10.7
-jumpserver/lion:v3.10.7
+jumpserver/web:v3.10.7
