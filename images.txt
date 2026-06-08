@@ -1,1 +1,1 @@
-metallb/controller:v0.13.3
+quay.io/metallb/controller:v0.13.3
