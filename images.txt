@@ -1,1 +1,2 @@
-python:3.11-slim
+nginx:1.31.1-alpine-perl
+nginx:1.31.1-alpine
