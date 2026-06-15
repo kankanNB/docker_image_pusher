@@ -1,1 +1,1 @@
-ghcr.io/dapr/placement:1.18.0
+ghcr.io/dapr/daprd:1.18.0
