@@ -1,1 +1,1 @@
-ghcr.io/dapr/daprd:1.18.0
+node:16
