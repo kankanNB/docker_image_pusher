@@ -1,1 +1,1 @@
-node:16
+moby/buildkit:v0.31.0
