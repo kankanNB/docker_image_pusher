@@ -1,1 +1,1 @@
-rustfs/rustfs:1.0.0-alpha.99-glibc
+rustfs/rustfs:1.0.0-beta.8
