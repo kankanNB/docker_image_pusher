@@ -1,1 +1,1 @@
-redis:8.0.0
+rustfs/rustfs:1.0.0-alpha.99-glibc
