@@ -1,1 +1,1 @@
-postfixadmin:4.0
+juanluisbaptiste/postfix:1.11.0
