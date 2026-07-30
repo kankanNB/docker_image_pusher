@@ -1,1 +1,2 @@
-kutt/kutt:v3.2.6
+cubejs/cube:v1.7.14
+cubejs/cubestore:v1.7.14
