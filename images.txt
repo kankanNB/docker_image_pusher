@@ -1,2 +1,2 @@
-cubejs/cube:v1.7.14
-cubejs/cubestore:v1.7.14
+cubejs/cube:v1.2.34
+cubejs/cubestore:v1.2.34
