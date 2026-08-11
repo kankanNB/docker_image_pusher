@@ -1,1 +1,1 @@
-diegosouzapw/omniroute:v3.8.49
+diegosouzapw/omniroute:3.8.49
