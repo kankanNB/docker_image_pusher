@@ -1,2 +1,1 @@
-cubejs/cube:v1.2.34
-cubejs/cubestore:v1.2.34
+diegosouzapw/omniroute:v3.8.49
