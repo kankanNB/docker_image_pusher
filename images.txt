@@ -1,1 +1,1 @@
-node:12
+gitlab/gitlab-runner:alpine3.21-v19.4.0
