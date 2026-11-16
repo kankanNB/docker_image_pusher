@@ -1,3 +1,1 @@
-gitlab/gitlab-ee:18.8.11-ee.0
-gitlab/gitlab-ee:18.11.14-ee.0
-gitlab/gitlab-ee:19.2.10-ee.0
+longhornio/longhorn-cli:v1.13.0
